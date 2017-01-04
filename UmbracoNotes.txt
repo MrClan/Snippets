@@ -1,0 +1,82 @@
+Notes;
+
+1. To redirect to another page, use umbraco internal property called umbracoInternalRedirectId
+2. To get all the child pages, as TypedContent, use: Umbraco.TypedContentAtRoot().First().Children
+3. To get url of a document by Id, use: Umbraco.NiceUrl(id)
+
+
+
+Add meta tags to the required nodes
+
+
+https://our.umbraco.org/apidocs/csharp/api/Umbraco.Web.Models.RenderModel.html
+
+
+Dumps all properties of all document types under root
+<hr/>
+	<ul>
+		@{
+		var r= Model.Content.Parent;
+		<b>Type = @r.GetType()</b>
+		foreach (var s in r.Children)
+		{
+			try
+			{
+			<li>
+				@(s.Name)
+				<ul>
+					@{
+					<b>Type = @s.GetType()</b>
+					foreach (var p in s.GetType().GetProperties())
+					{
+						try
+						{
+						<li>@(p.Name + "  ->  " + p.GetValue(s, null))</li>
+						}catch
+						{
+							<li>Exception for: @p.Name</li>
+						}
+
+					}}
+				</ul>
+			</li>
+				
+			}catch
+			{
+				<li>Exception for: @s.Name</li>
+			}
+
+		}}
+	</ul>
+<hr/>
+
+
+
+
+
+        private static string ToTitleCase(string str)
+        {
+            var temp = str.ToLower().ToCharArray();
+            temp[0] = char.ToUpper(temp[0]);
+            return new string(temp);
+        }
+        internal static void UpdateQuestions()
+        {
+            var db = new ApplicationDbContext();
+            var questions = db.Questions.Include(que => que.Category).ToList();
+
+            try
+            {
+                foreach (var q in questions)
+                {
+                    q.LeftText = ToTitleCase(q.LeftText);
+                    q.RightText = ToTitleCase(q.RightText);
+                    db.Entry(q).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException exc)
+            {
+                throw;
+            }
+        }
