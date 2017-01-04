@@ -1,8 +1,8 @@
 Notes:
 
-1. To redirect to another page, use umbraco internal property called umbracoInternalRedirectId
-2. To get all the child pages, as TypedContent, use: Umbraco.TypedContentAtRoot().First().Children
-3. To get url of a document by Id, use: Umbraco.NiceUrl(id)
+1. To redirect to another page, use umbraco internal property called **umbracoInternalRedirectId**
+2. To get all the child pages, as TypedContent, use: **Umbraco.TypedContentAtRoot().First().Children**
+3. To get url of a document by Id, use: **Umbraco.NiceUrl(id)**
 
 
 
