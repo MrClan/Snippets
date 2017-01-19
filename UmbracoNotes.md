@@ -50,3 +50,6 @@ Notes:
 	</ul>
 <hr/>
 ````
+
+####To redirect a link to some other page
+** The documentType contains two properties of the type "contentPicker" and their aliases are umbracoRedirect and umbracoInternalRedirectId. Once you pick a page, the redirecting will be done automagically by Umbraco.**
